@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
       return $this->hasMany(Follow::class);
     }
+
+    public function isFollowing($target_id)
+    {
+      return (bool) $this->follows()->where('target_id', $target_id)->first(['id']);
+    }
 }

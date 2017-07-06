@@ -15,4 +15,37 @@ class FollowController extends Controller
       'users' => User::where('id', '!=', Auth::id())->get()
     ]);
   }
+
+  public function follow(User $user)
+  {
+    if (!Auth::user()->isFollowing($user->id))
+    {
+      # Create a new follow instance for the authenticated user
+      Auth::user()->follows()->create([
+        'target_id' => $user->id,
+      ]);
+
+      return back()->with('Success', 'You are now friends with '.$user->name);
+    }
+    else
+    {
+      return back()->with('Error', 'You are already following this person.');
+    }
+  }
+
+  public function unfollow(User $user)
+  {
+    if (Auth::user()->isFollowing($user->id))
+    {
+      $follow = Auth::user()->follows()->where('target_id', $user->id)->first();
+      $follow->delete();
+
+      return back()->with('Success', 'You are no longer friends with '.$user->name);
+    }
+    else
+    {
+      return back()->with('Error', 'You are not following this person.');
+    }
+
+  }
 }
