@@ -45,6 +45,7 @@
                     <ul class="nav navbar-nav">
                         &nbsp;
                         <li><a href="{{ url('/posts/create') }}">New Post</a></li>
+                        <li><a href="{{ url('/users') }}">Users</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

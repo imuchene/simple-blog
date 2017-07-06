@@ -20,9 +20,8 @@ Route::get('/home', 'HomeController@index');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-
     Route::resource('posts', 'PostsController');
+    Route::get('/users', 'FollowController@index');
+    Route::post('/follow/{user}', 'FollowController@follow');
+    Route::delete('/unfollow/{user}', 'FollowController@unfollow');
 });
-
-
-
